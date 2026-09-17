@@ -11,5 +11,5 @@ private:
 public:
   void begin(DigitalInput input);
   void readState();
-  bool isPressed();
+  bool isPressed()const;
 };
