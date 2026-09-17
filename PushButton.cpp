@@ -5,6 +5,7 @@ void PushButton::begin(DigitalInput input) {
 }
 
 void PushButton::readState() {
+  input.readState()
 }
 
 bool PushButton::isPressed() {
