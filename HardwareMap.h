@@ -18,3 +18,7 @@ enum class DigitalOutput : uint8_t {
   BUZZER = 0,
   POWER_LED,
 };
+
+constexpr uint8_t DO_PINS[]{
+  3, 12
+};
