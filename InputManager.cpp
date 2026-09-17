@@ -10,6 +10,19 @@ void InputManager::begin(DigitalInput input) {
 }
 
 void InputManager::readState() {
+  bool currentInputState = digitalRead(pin);
+
+  if (currentInputState != lastInputState) {
+    lastTimeStateChanged = millis();
+  }
+
+  if ((millis() - lastTimeStateChanged) > debounceTimeMs) {
+
+    if (currentInputState != stableinputState) {
+      stableinputState = currentInputState;
+    }
+  }
+  lastInputState = currentInputState;
 }
 
 bool InputManager::isActive() const {
