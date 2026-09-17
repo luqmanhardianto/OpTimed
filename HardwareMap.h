@@ -13,3 +13,8 @@ enum class DigitalInput : uint8_t {
 constexpr uint8_t DI_PINS[] = {
   4, 5, 6, 7, 8
 };
+
+enum class DigitalOutput : uint8_t {
+  BUZZER = 0,
+  POWER_LED,
+};
