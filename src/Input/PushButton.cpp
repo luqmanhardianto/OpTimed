@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "PushButton.h"
 
 void PushButton::begin(DigitalInput input) {

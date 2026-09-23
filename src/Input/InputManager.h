@@ -3,8 +3,8 @@
 #include <Arduino.h>
 #include <stdint.h>
 
-#include "Config.h"
-#include "HardwareMap.h"
+#include "../Config.h"
+#include "../HardwareMap.h"
 
 class InputManager {
 private:

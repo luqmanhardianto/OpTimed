@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 #include "InputManager.h"
-#include "HardwareMap.h"
+#include "../HardwareMap.h"
 
 class PushButton {
 private:
@@ -11,5 +11,5 @@ private:
 public:
   void begin(DigitalInput input);
   void readState();
-  bool isPressed()const;
+  bool isPressed() const;
 };
