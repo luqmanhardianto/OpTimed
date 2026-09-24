@@ -34,9 +34,3 @@ enum Pin : uint8_t {
   LATCH = 10,
 };
 }
-
-namespace SystemTiming {
-constexpr uint8_t DEBOUNCE_MS = 100;
-constexpr uint8_t LONGPRESS_MS = 1000;
-constexpr uint8_t BLINK_MS = 500;
-}
