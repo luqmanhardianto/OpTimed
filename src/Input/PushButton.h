@@ -9,7 +9,7 @@ class PushButton {
 private:
   InputManager input;
 public:
-  void begin(DigitalInput input);
+  void begin(uint8_t pin);
   void readState();
   bool isPressed() const;
 };

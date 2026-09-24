@@ -5,24 +5,21 @@ no logic here, ever, every other file includes THIS instead of
 writing a raw pin number
 */
 #include <stdint.h>
+#include <Arduino.h>
 
-enum class DigitalInput : uint8_t {
-  BUTTON_POWER = 0,
+namespace DigitalInput {
+enum Pin : uint8_t {
+  BUTTON_POWER = 4,
   BUTTON_SELECT,
   BUTTON_NEXT,
   BUTTON_UP,
-  BUTTON_DOWN
+  BUTTON_DOWN,
 };
+}
 
-constexpr uint8_t DI_PINS[] = {
-  4, 5, 6, 7, 8
+namespace DigitalOutput {
+enum Pin : uint8_t {
+  BUZZER = 3,
+  POWER_LED = 12,
 };
-
-enum class DigitalOutput : uint8_t {
-  BUZZER = 0,
-  POWER_LED,
-};
-
-constexpr uint8_t DO_PINS[]{
-  3, 12
-};
+}

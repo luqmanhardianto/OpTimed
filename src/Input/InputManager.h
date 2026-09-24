@@ -17,7 +17,7 @@ private:
   unsigned long debounceTimeMs = INPUT_DEBOUNCE_MS;
 
 public:
-  void begin(DigitalInput input);
+  void begin(uint8_t pin);
   void readState();
   bool isActive() const;
 };
