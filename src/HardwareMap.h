@@ -1,5 +1,9 @@
 #pragma once
-
+/*  
+single source of truth for every pin.
+no logic here, ever, every other file includes THIS instead of
+writing a raw pin number
+*/
 #include <stdint.h>
 
 enum class DigitalInput : uint8_t {
