@@ -44,7 +44,7 @@ private:
 public:
   bool begin();
 
-  bool readDateTIme(DateTime &dateTime);
+  bool readDateTime(DateTime &dateTime);
   bool writeDateTime(const DateTime &dateTime);
 
   bool set24HourMode();
@@ -53,5 +53,5 @@ public:
   bool isOscillatorStopped();
   bool clearOscillatorStopFlag();
 
-  bool isCOnnected();
+  bool isConnected();
 };

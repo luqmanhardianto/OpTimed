@@ -16,10 +16,10 @@ uint8_t DS3231::decToBcd(uint8_t value);
 
 bool DS3231::begin() {
   Wire.begin();
-  return isCOnnected();
+  return isConnected();
 }
 
-bool DS3231::readDateTIme(DateTime &dateTime);
+bool DS3231::readDateTime(DateTime &dateTime);
 bool DS3231::writeDateTime(const DateTime &dateTime);
 
 bool DS3231::set24HourMode();
@@ -28,7 +28,7 @@ bool DS3231::setSqw1Hz();
 bool DS3231::isOscillatorStopped();
 bool DS3231::clearOscillatorStopFlag();
 
-bool DS3231::isCOnnected() {
+bool DS3231::isConnected() {
   Wire.beginTransmission(I2C_ADDRESS);
   return Wire.endTransmission() == 0;
 }
