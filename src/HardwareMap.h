@@ -20,6 +20,7 @@ enum Pin : uint8_t {
 namespace DigitalOutput {
 enum Pin : uint8_t {
   BUZZER = 3,
+  OE = 9,
   POWER_LED = 12,
 };
 }
