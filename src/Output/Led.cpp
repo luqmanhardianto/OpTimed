@@ -7,9 +7,15 @@ void Led::begin(uint8_t pin) {
 }
 
 void Led::on() {
-  digitalWrite(_pin, HIGH);
+  _state = true;
+  digitalWrite(_pin, _state);
 }
 
 void Led::off() {
-  digitalWrite(_pin, LOW);
+  _state = false;
+  digitalWrite(_pin, _state);
+}
+
+bool Led::getState() const {
+  return _state;
 }
