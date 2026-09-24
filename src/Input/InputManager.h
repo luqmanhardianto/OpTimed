@@ -14,7 +14,7 @@ private:
   bool stableinputState = HIGH;
 
   unsigned long lastTimeStateChanged = 0;
-  unsigned long debounceTimeMs = INPUT_DEBOUNCE_MS;
+  unsigned long debounceTimeMs = SystemTiming::DEBOUNCE_MS;
 
 public:
   void begin(uint8_t pin);

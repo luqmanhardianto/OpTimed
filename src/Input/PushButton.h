@@ -2,7 +2,6 @@
 #pragma once
 
 #include <Arduino.h>
-#include <cstdint>
 
 #include "InputManager.h"
 #include "../HardwareMap.h"
