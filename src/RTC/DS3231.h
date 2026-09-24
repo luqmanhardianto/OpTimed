@@ -3,8 +3,9 @@
 
 #include <Arduino.h>
 #include <stdint.h>
+#include <Wire.h>
 
-
+#include "DateTime.h"
 
 class DS3231 {
 private:
