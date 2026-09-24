@@ -1,3 +1,4 @@
+#include <cstdint>
 #pragma once
 /*  
 single source of truth for every pin.
@@ -23,4 +24,19 @@ enum Pin : uint8_t {
   OE = 9,
   POWER_LED = 12,
 };
+}
+
+
+namespace ShiftRegister {
+enum Pin : uint8_t {
+  DATA = 11,
+  CLOCK = 13,
+  LATCH = 10,
+};
+}
+
+namespace SystemTiming {
+constexpr uint8_t DEBOUNCE_MS = 100;
+constexpr uint8_t LONGPRESS_MS = 1000;
+constexpr uint8_t BLINK_MS = 500;
 }
