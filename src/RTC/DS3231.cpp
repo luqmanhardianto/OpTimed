@@ -16,4 +16,7 @@ bool DS3231::setSqw1Hz();
 bool DS3231::isOscillatorStopped();
 bool DS3231::clearOscillatorStopFlag();
 
-bool DS3231::isCOnnected();
+bool DS3231::isCOnnected() {
+  Wire.beginTransmission(I2C_ADDRESS);
+  return Wire.endTransmission() == 0;
+}
