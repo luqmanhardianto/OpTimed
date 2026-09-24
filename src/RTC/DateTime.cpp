@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "DateTime.h"
 
 bool isLeapYear(uint16_t year) {
@@ -55,4 +56,43 @@ uint8_t daysInMonth(uint16_t year, uint8_t month) {
   }
 }
 
-bool isValidDAteTime(const DateTime &dateTime);
+bool isValidDAteTime(const DateTime &dateTime) {
+
+  // support 2000-2099 years
+  if (dateTime.year < 2000 || dateTime.year > 2099) {
+    return false;
+  }
+
+  // check valid month
+  if (dateTime.month < 1 || dateTime.month > 12) {
+    return false;
+  }
+
+
+  const uint8_t maxDay = daysInMonth(
+    dateTime.year,
+    dateTime.month);
+
+  // check valid days
+  if (dateTime.day < 1 || dateTime.day > maxDay) {
+    return false;
+  }
+
+  // check valid hours
+  if (dateTime.hour > 23) {
+    return false;
+  }
+
+  // check valid minutes
+  if (dateTime.minute > 59) {
+    return false;
+  }
+
+  // check valid seconds
+  if (dateTime.second > 59) {
+    return false;
+  }
+
+  // all status DS3231 is valid
+  return true;
+}
