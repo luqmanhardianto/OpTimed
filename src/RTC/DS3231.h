@@ -23,9 +23,9 @@ private:
   static constexpr uint8_t REG_CONTROL = 0x0E;
   static constexpr uint8_t REG_STATUS = 0x0F;
 
-  static constexpr uint8_t CONTROL_RS1 = 0;
-  static constexpr uint8_t CONTROL_RS2 = 0;
-  static constexpr uint8_t CONTROL_INTCN = 0;
+  static constexpr uint8_t CONTROL_RS1 = 3;
+  static constexpr uint8_t CONTROL_RS2 = 4;
+  static constexpr uint8_t CONTROL_INTCN = 2;
 
   static constexpr uint8_t STATUS_OSF = 7;
 
