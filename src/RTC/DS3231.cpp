@@ -1,10 +1,7 @@
 #include "DS3231.h"
 #include <Wire.h>
 
-bool DS3231::readRegisters(
-  uint8_t address,
-  uint8_t *buffer,
-  uint8_t length);
+
 
 bool DS3231::writeRegisters(
   uint8_t address,
@@ -19,6 +16,41 @@ bool DS3231::begin() {
   return isConnected();
 }
 
+bool DS3231::isConnected() {
+  Wire.beginTransmission(I2C_ADDRESS);
+  return Wire.endTransmission() == 0;
+}
+
+bool DS3231::readRegisters(
+  uint8_t address,
+  uint8_t *buffer,
+  uint8_t length) {
+  if (buffer == nullptr || length == 0) {
+    return false;
+  }
+
+  Wire.beginTransmission(I2C_ADDRESS);
+  Wire.write(address);
+
+  if (Wire.endTransmission(false) != 0) {
+    return false;
+  }
+
+  uint8_t received = Wire.requestFrom(
+    I2C_ADDRESS,
+    length);
+
+  if (received != length) {
+    return false;
+  }
+
+  for (uint8_t i = 0; i < length; ++i) {
+    buffer[i] = Wire.read();
+  }
+
+  return true;
+}
+
 bool DS3231::readDateTime(DateTime &dateTime);
 bool DS3231::writeDateTime(const DateTime &dateTime);
 
@@ -27,8 +59,3 @@ bool DS3231::setSqw1Hz();
 
 bool DS3231::isOscillatorStopped();
 bool DS3231::clearOscillatorStopFlag();
-
-bool DS3231::isConnected() {
-  Wire.beginTransmission(I2C_ADDRESS);
-  return Wire.endTransmission() == 0;
-}
