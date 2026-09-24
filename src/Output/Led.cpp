@@ -6,5 +6,10 @@ void Led::begin(uint8_t pin) {
   digitalWrite(_pin, LOW);
 }
 
-// void Led::on();
-// void Led::off();
+void Led::on() {
+  digitalWrite(_pin, HIGH);
+}
+
+void Led::off() {
+  digitalWrite(_pin, LOW);
+}
