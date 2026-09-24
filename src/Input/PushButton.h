@@ -1,9 +1,19 @@
+
 #pragma once
 
 #include <Arduino.h>
+#include <cstdint>
 
 #include "InputManager.h"
 #include "../HardwareMap.h"
+
+enum ButtonEvent : uint8_t {
+  BTN_NONE = 0,
+  BTN_SHORT_PRESS,
+  BTN_LONG_PRESS,
+  BTN_REPEAD,
+  BTN_RELEASED
+};
 
 class PushButton {
 private:
