@@ -1,6 +1,8 @@
+
 #pragma once
 
 #include <Arduino.h>
+#include <cstdint>
 
 struct DateTime {
   uint16_t year;
@@ -12,3 +14,7 @@ struct DateTime {
 
   bool isValid() const;
 };
+
+bool isLeapYear(uint16_t year);
+uint8_t daysInMonth(uint16_t year, uint8_t month);
+bool isValidDAteTime(const DateTime &dateTime);
