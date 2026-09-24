@@ -1,6 +1,18 @@
 #include "DS3231.h"
 #include <Wire.h>
 
+bool DS3231::readRegisters(
+  uint8_t address,
+  uint8_t *buffer,
+  uint8_t length);
+
+bool DS3231::writeRegisters(
+  uint8_t address,
+  const uint8_t *buffer,
+  uint8_t length);
+
+uint8_t DS3231::bcdToDec(uint8_t value);
+uint8_t DS3231::decToBcd(uint8_t value);
 
 bool DS3231::begin() {
   Wire.begin();
