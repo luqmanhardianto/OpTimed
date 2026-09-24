@@ -2,7 +2,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include <cstdint>
+
 class Led {
 private:
   uint8_t _pin;
