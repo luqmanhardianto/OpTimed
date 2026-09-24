@@ -7,6 +7,8 @@ writing a raw pin number
 #include <stdint.h>
 #include <Arduino.h>
 
+constexpr uint8_t RTC_SQW_PIN = 2;
+
 namespace DigitalInput {
 enum Pin : uint8_t {
   BUTTON_POWER = 4,

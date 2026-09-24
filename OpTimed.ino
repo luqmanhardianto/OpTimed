@@ -8,7 +8,7 @@ Led ledPower;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(9600);
   delay(500);
 
   buttonPower.begin(DigitalInput::BUTTON_POWER);
@@ -19,11 +19,13 @@ void loop() {
   // put your main code here, to run repeatedly:
   buttonPower.readState();
   if (buttonPower.isPressed()) {
-  ledPower.on();
+    ledPower.on();
   } else {
-  ledPower.off();
+    ledPower.off();
   }
   Serial.print("btnPower:");
-  Serial.println(buttonPower.isPressed());
-  delay(100);
+  Serial.print(buttonPower.isPressed());
+  Serial.print(" | ledPower:");
+  Serial.println(ledPower.getState());
+  delay(500);
 }
