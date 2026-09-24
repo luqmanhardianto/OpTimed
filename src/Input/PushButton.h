@@ -22,4 +22,5 @@ public:
   void begin(uint8_t pin);
   void readState();
   bool isPressed() const;
+  ButtonEvent update();
 };
