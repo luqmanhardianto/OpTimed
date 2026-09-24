@@ -2,7 +2,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include <cstdint>
+#include <stdint.h>
 
 struct DateTime {
   uint16_t year;

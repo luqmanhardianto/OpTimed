@@ -1,4 +1,3 @@
-#include <cstdint>
 #include "DateTime.h"
 
 bool isLeapYear(uint16_t year) {
@@ -95,4 +94,8 @@ bool isValidDAteTime(const DateTime &dateTime) {
 
   // all status DS3231 is valid
   return true;
+}
+
+bool DateTime::isValid()const{
+  return isValidDAteTime(*this);
 }
