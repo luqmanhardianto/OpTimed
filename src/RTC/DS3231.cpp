@@ -1,12 +1,6 @@
+#include <cstdint>
 #include "DS3231.h"
 #include <Wire.h>
-
-
-
-bool DS3231::writeRegisters(
-  uint8_t address,
-  const uint8_t *buffer,
-  uint8_t length);
 
 uint8_t DS3231::bcdToDec(uint8_t value);
 uint8_t DS3231::decToBcd(uint8_t value);
@@ -49,6 +43,25 @@ bool DS3231::readRegisters(
   }
 
   return true;
+}
+
+bool DS3231::writeRegisters(
+  uint8_t address,
+  const uint8_t *buffer,
+  uint8_t length) {
+
+  if (buffer == nullptr || length == 0) {
+    return false;
+  }
+
+  Wire.beginTransmission(I2C_ADDRESS);
+  Wire.write(address);
+
+  for (uint8_t i = 0; i < length; ++i) {
+    Wire.write(buffer[i]);
+  }
+
+  return Wire.endTransmission() == 0;
 }
 
 bool DS3231::readDateTime(DateTime &dateTime);
