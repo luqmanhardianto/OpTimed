@@ -264,11 +264,11 @@ bool DS3231::setSqw1Hz() {
   SQW/INT is used as square-wave output
   */
 
-  // set RS1 = 0
+  // set bit 3 RS1 = 0
   control &= ~(1 << CONTROL_RS1);
-  // set RS2 = 0
+  // set bit 4 RS2 = 0
   control &= ~(1 << CONTROL_RS2);
-  // set INTCN = 0
+  // set bit 2 INTCN = 0
   control &= ~(1 << CONTROL_INTCN);
 
   // write config RS1,RS2,INTCN to rtc
