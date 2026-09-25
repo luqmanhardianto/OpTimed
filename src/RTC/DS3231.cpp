@@ -64,13 +64,13 @@ bool DS3231::writeRegisters(
 
 // convert packed BCD to DEC e.g. value is 0001_0010
 uint8_t DS3231::bcdToDec(uint8_t value) {
-  // left get upper nible + right lower nibble
+  // left get upper nibble + right lower nibble
   // left side
   // 0000_0001 -> (1) * 10 = (10)
   // right side
   // 0001_0010 & 0000_1111 = 0000_0010 -> (2)
   // return is 10 + 2 = 12 DEC
-  return ((value >> 4) * 10 + (value & 0x0F));  // 0x0F = 0000_1111
+  return ((value >> 4) * 10 + (value & 0x0F));  // 0x0F = 0000_1111 (masking)
 }
 
 // convert DEC to BCD e.g. value is 12
