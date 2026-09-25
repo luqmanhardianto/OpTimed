@@ -243,7 +243,40 @@ bool DS3231::set24HourMode() {
     1);
 }
 
-bool DS3231::setSqw1Hz();
+bool DS3231::setSqw1Hz() {
+
+  uint8_t control;
+
+  // validate read control register only
+  if (!readRegisters(
+        REG_CONTROL,
+        &control,
+        1)) {
+    return false;
+  }
+
+  /*
+  RS1 = 0
+  RS2 = 0
+  INTCN = 0
+  result:
+  SQW output = 1Hz
+  SQW/INT is used as square-wave output
+  */
+
+  // set RS1 = 0
+  control &= ~(1 << CONTROL_RS1);
+  // set RS2 = 0
+  control &= ~(1 << CONTROL_RS2);
+  // set INTCN = 0
+  control &= ~(1 << CONTROL_INTCN);
+
+  // write config RS1,RS2,INTCN to rtc
+  return writeRegisters(
+    REG_CONTROL,
+    &control,
+    1);
+}
 
 bool DS3231::isOscillatorStopped();
 bool DS3231::clearOscillatorStopFlag();
