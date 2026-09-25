@@ -1,3 +1,4 @@
+#include "DateTime.h"
 #include <cstdint>
 #include "DS3231.h"
 #include <Wire.h>
@@ -64,7 +65,78 @@ bool DS3231::writeRegisters(
   return Wire.endTransmission() == 0;
 }
 
-bool DS3231::readDateTime(DateTime &dateTime);
+bool DS3231::readDateTime(DateTime &dateTime) {
+  uint8_t registers[7];
+
+  if (!readRegisters(
+        REG_SECONDS,
+        registers,
+        sizeof(registers))) {
+    return false;
+  }
+
+  uint8_t seconds = registers[0] & 0x7F;  // 0x7F = 0000_1111
+  uint8_t minutes = registers[1] & 0x7F;
+  uint8_t hoursRegister = registers[2];
+
+  uint8_t hours;
+
+  // DS3231 hour register:
+  // bit 6 = 12/24-hour mode
+  // bit 5 = AM/PM in 12-hour mode
+  if (hoursRegister 0x40) {  //  0x40 = 0100_0000
+    // 12-hour mode
+    uint8_t hour12 = bcdToDec(hoursRegister & 0x1F);  //  0x1F = 0001_1111
+    bool pm = (hoursRegister & 0x20) != 0;            //  0x20 = 0010_0000
+
+    if (hour12 < 1 || hour12 > 12) {
+      return false;
+    }
+
+    if (pm) {
+      hours = (hour12 == 12) ? 12 : hour12 + 12;
+    } else {
+      hours = (hour12 == 12) ? 0 : hour12;
+    }
+
+  } else {
+    // 24-hour mode
+    hours = bcdToDec(hoursRegister & 0x3F);  // 0x3F = 0011_1111
+  }
+
+  uint8_t day = registers[3] & 0x07;              // 0x07 = 0000_0111
+  uint8_t date = bcdToDec(registers[4] & 0x3F);   // 0x3F = 0011_1111
+  uint8_t month = bcdToDec(registers[5] & 0x1F);  // 0x1F = 0001_1111
+  uint8_t year = bcdToDec(registers[6]);
+
+  // ds3231 year register represents 00-99.
+  // optimed currenlty supports 200-2099.
+  uint16_t fullYear = 2000 + year;
+
+  // day-of-week is stored in the rtc but is not part
+  // of DateTime, so only validate its register range.
+  if (day < 1 || day > 7) {
+    return false;
+  }
+
+  DateTime result;
+
+  result.year = fullYear;
+  result.month = month;
+  result.day = day;
+  result.hour = hours;
+  result.minute = bcdToDec(minutes);
+  result.second = bcdToDec(seconds);
+
+  if (!result.isValid()) {
+    return false;
+  }
+
+  dateTime = result;
+
+  return true;
+}
+
 bool DS3231::writeDateTime(const DateTime &dateTime);
 
 bool DS3231::set24HourMode();
