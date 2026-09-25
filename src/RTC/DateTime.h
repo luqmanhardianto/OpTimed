@@ -17,4 +17,4 @@ struct DateTime {
 
 bool isLeapYear(uint16_t year);
 uint8_t daysInMonth(uint16_t year, uint8_t month);
-bool isValidDAteTime(const DateTime &dateTime);
+bool isValidDateTime(const DateTime &dateTime);

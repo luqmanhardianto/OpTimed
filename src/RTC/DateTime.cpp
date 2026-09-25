@@ -55,7 +55,7 @@ uint8_t daysInMonth(uint16_t year, uint8_t month) {
   }
 }
 
-bool isValidDAteTime(const DateTime &dateTime) {
+bool isValidDateTime(const DateTime &dateTime) {
 
   // support 2000-2099 years
   if (dateTime.year < 2000 || dateTime.year > 2099) {
@@ -97,5 +97,5 @@ bool isValidDAteTime(const DateTime &dateTime) {
 }
 
 bool DateTime::isValid()const{
-  return isValidDAteTime(*this);
+  return isValidDateTime(*this);
 }
