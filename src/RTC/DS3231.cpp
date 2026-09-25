@@ -75,7 +75,13 @@ uint8_t DS3231::bcdToDec(uint8_t value) {
 
 // convert DEC to BCD e.g. value is 12
 uint8_t DS3231::decToBcd(uint8_t value) {
-  // left 
+  // left get upper nibble and right side get lower nibble and combine it
+  // left side
+  // 12 / 10 = 1 -> 0000_0001 << 4 = 0001_0000
+  // right side
+  // 12 % 10 = 2 -> 0000_0010
+  // result is combine both using bitwise OR operation
+  // 0001_0000 | 0000_0010 = 0001_0010
   return ((value / 10) << 4 | (value % 10));
 }
 
