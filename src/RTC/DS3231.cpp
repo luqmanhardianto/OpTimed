@@ -188,7 +188,61 @@ bool DS3231::writeDateTime(const DateTime &dateTime) {
     sizeof(registers));
 }
 
-bool DS3231::set24HourMode();
+bool DS3231::set24HourMode() {
+
+  uint8_t hoursRegister;
+
+  // validate read data hour only
+  if (!readRegisters(
+        REG_HOURS,
+        &hoursRegister,
+        1)) {
+    return false;
+  }
+
+  // if already in 24-hour mode, nothing to change.
+  // 0x40 = 0[1]00_0000
+  // bit 6 = 0 -> 24-hour mode
+  if ((hoursRegister & 0x40) == 0) {
+    return true;
+  }
+
+  // masking get data 12-hour mode
+  // 0x1F = 0001_1111
+  uint8_t hour12 = bcdToDec(hoursRegister & 0x1F);
+
+  // get AM/PM state in 12-hour mode.
+  // 0x20 = 00[1]0_0000
+  // bit 5 = 1 -> PM
+  bool pm = (hoursRegister & 0x20) != 0;
+
+  // validate 12-hour mode data range (1-12)
+  if (hour12 < 1 || hour12 > 12) {
+    return false;
+  }
+
+  uint8_t hour24;
+
+  // convert 12-hour format to 24-hor format
+  if (pm) {
+    hour24 = (hour12 == 12) ? 12 : hour12 + 12;
+  } else {
+    hour24 = (hour12 == 12) ? 0 : hour12;
+  }
+
+  // put data 24-hour format to hoursRegister
+  // e.g. hour24 = 23
+  // result decToBcd = 0[0]10_0011
+  // bit 6 = 0 -> 24-hour format
+  hoursRegister = decToBcd(hour24);
+
+  // write data 24-hour mode to rtc
+  return writeRegisters(
+    REG_HOURS,
+    &hoursRegister,
+    1);
+}
+
 bool DS3231::setSqw1Hz();
 
 bool DS3231::isOscillatorStopped();
