@@ -62,13 +62,22 @@ bool DS3231::writeRegisters(
   return Wire.endTransmission() == 0;
 }
 
-// convert packed BCD to DEC
+// convert packed BCD to DEC e.g. value is 0001_0010
 uint8_t DS3231::bcdToDec(uint8_t value) {
   // left get upper nible + right lower nibble
+  // left side
+  // 0000_0001 -> (1) * 10 = (10)
+  // right side
+  // 0001_0010 & 0000_1111 = 0000_0010 -> (2)
+  // return is 10 + 2 = 12 DEC
   return ((value >> 4) * 10 + (value & 0x0F));  // 0x0F = 0000_1111
 }
 
-uint8_t DS3231::decToBcd(uint8_t value);
+// convert DEC to BCD e.g. value is 12
+uint8_t DS3231::decToBcd(uint8_t value) {
+  // left 
+  return ((value / 10) << 4 | (value % 10));
+}
 
 bool DS3231::readDateTime(DateTime &dateTime) {
   uint8_t registers[7];
