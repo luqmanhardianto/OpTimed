@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "DateTime.h"
 #include "DS3231.h"
 #include <Wire.h>
@@ -156,7 +157,36 @@ bool DS3231::readDateTime(DateTime &dateTime) {
   return true;
 }
 
-bool DS3231::writeDateTime(const DateTime &dateTime);
+bool DS3231::writeDateTime(const DateTime &dateTime) {
+  // validate rtc
+  if (!dateTime.isValid()) {
+    return false;
+  }
+
+  uint8_t registers[7];
+
+  // put data second, minute into registers
+  registers[0] = decToBcd(dateTime.second);
+  registers[1] = decToBcd(dateTime.minute);
+
+  // always write 24-hour mode.
+  registers[2] = decToBcd(dateTime.hour);
+
+  // day-of-week is not represented by DateTime.
+  // use 1 as a valid default value.
+  registers[3] = 1;
+
+  // put data day,month, year to registers
+  registers[4] = decToBcd(dateTime.day);
+  registers[5] = decToBcd(dateTime.month);
+  registers[6] = decToBcd(dateTime.year - 2000);
+
+  // write all data to rtc
+  return writeRegisters(
+    REG_SECONDS,
+    registers,
+    sizeof(registers));
+}
 
 bool DS3231::set24HourMode();
 bool DS3231::setSqw1Hz();
