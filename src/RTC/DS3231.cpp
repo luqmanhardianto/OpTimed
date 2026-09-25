@@ -95,7 +95,7 @@ bool DS3231::readDateTime(DateTime &dateTime) {
     return false;
   }
 
-  uint8_t seconds = registers[0] & 0x7F;  // 0x7F = 0000_1111
+  uint8_t seconds = registers[0] & 0x7F;  // 0x7F = 0111_1111
   uint8_t minutes = registers[1] & 0x7F;
   uint8_t hoursRegister = registers[2];
 
@@ -104,7 +104,7 @@ bool DS3231::readDateTime(DateTime &dateTime) {
   // DS3231 hour register:
   // bit 6 = 12/24-hour mode
   // bit 5 = AM/PM in 12-hour mode
-  if (hoursRegister 0x40) {  //  0x40 = 0100_0000
+  if (hoursRegister & 0x40) {  //  0x40 = 0100_0000
     // 12-hour mode
     uint8_t hour12 = bcdToDec(hoursRegister & 0x1F);  //  0x1F = 0001_1111
     bool pm = (hoursRegister & 0x20) != 0;            //  0x20 = 0010_0000
@@ -121,7 +121,7 @@ bool DS3231::readDateTime(DateTime &dateTime) {
 
   } else {
     // 24-hour mode
-    hours = bcdToDec(hoursRegister & 0x3F);  // 0x3F = 0011_1111
+    hours = bcdToDec(hoursRegister & 0x3F);  // 0x3F = 0011_1111 (masking)
   }
 
   uint8_t day = registers[3] & 0x07;              // 0x07 = 0000_0111
