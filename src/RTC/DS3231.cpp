@@ -302,4 +302,25 @@ return status OSF
   return (status & (1 << STATUS_OSF) != 0);
 }
 
-bool DS3231::clearOscillatorStopFlag();
+bool DS3231::clearOscillatorStopFlag() {
+
+  uint8_t status;
+
+  // validate communication read status OSF only
+  if (!readRegisters(
+        REG_STATUS,
+        &status,
+        1)) {
+    // communication failure
+    return false;
+  }
+
+  // change bit 7 OSF from 1 to 0
+  status &= ~(1 << STATUS_OSF);
+
+  // write OSF status = 0 to rtc
+  return writeRegisters(
+    REG_STATUS,
+    &status,
+    1);
+}
