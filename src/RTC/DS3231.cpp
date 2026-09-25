@@ -293,11 +293,9 @@ bool DS3231::isOscillatorStopped() {
     return false;
   }
 
-  /*
-return status OSF
-1 = stop
-0 = running
-*/
+  // return status OSF
+  // 1 = stop
+  // 0 = running
   return (status & (1 << STATUS_OSF) != 0);
 }
 
