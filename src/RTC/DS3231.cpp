@@ -3,9 +3,6 @@
 #include "DS3231.h"
 #include <Wire.h>
 
-uint8_t DS3231::bcdToDec(uint8_t value);
-uint8_t DS3231::decToBcd(uint8_t value);
-
 bool DS3231::begin() {
   Wire.begin();
   return isConnected();
@@ -64,6 +61,14 @@ bool DS3231::writeRegisters(
 
   return Wire.endTransmission() == 0;
 }
+
+// convert packed BCD to DEC
+uint8_t DS3231::bcdToDec(uint8_t value) {
+  // left get upper nible + right lower nibble
+  return ((value >> 4) * 10 + (value & 0x0F));  // 0x0F = 0000_1111
+}
+
+uint8_t DS3231::decToBcd(uint8_t value);
 
 bool DS3231::readDateTime(DateTime &dateTime) {
   uint8_t registers[7];
