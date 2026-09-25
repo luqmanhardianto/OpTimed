@@ -278,5 +278,28 @@ bool DS3231::setSqw1Hz() {
     1);
 }
 
-bool DS3231::isOscillatorStopped();
+bool DS3231::isOscillatorStopped() {
+
+  uint8_t status;
+
+  // validate communication read status register only
+  if (!readRegisters(
+        REG_STATUS,
+        &status,
+        1)) {
+    /*
+      communication failure is not same
+      as an oscillator-stop indication.
+      */
+    return false;
+  }
+
+  /*
+return status OSF
+1 = stop
+0 = running
+*/
+  return (status & (1 << STATUS_OSF) != 0);
+}
+
 bool DS3231::clearOscillatorStopFlag();
