@@ -10,7 +10,7 @@ enum ButtonEvent : uint8_t {
   BTN_NONE = 0,
   BTN_SHORT_PRESS,
   BTN_LONG_PRESS,
-  BTN_RELEASED
+  BTN_REPEAT
 };
 
 class PushButton {
