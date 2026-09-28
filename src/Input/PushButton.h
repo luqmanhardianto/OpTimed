@@ -16,6 +16,13 @@ enum ButtonEvent : uint8_t {
 class PushButton {
 private:
   InputManager input;
+
+  bool wasPressed = false;
+  bool longPressSent = false;
+  bool repeatStarted = false;
+
+  unsigned long pressStartTime = 0;
+  unsigned long lastRepeatTime = 0;
 public:
   void begin(uint8_t pin);
   void readState();
