@@ -71,5 +71,41 @@ ButtonEvent PushButton::update() {
       // return ButtonEvent : BTN_LONG_PRESS
       return BTN_LONG_PRESS;
     }
+
+    // repeat event begin after REPEAT_START_MS
+    if (longPressSent) {
+
+      // record repeat time
+      const unsigned long repeatTime = now - lastRepeatTime;
+
+      // first time repeat start event
+      if (!repeatStarted) {
+
+        // ButtonEvent Repeat is started after REPEAT_START_MS
+        if (heldTime >= SystemTiming::LONGPRESS_MS + SystemTiming::REPEAT_START_MS) {
+
+          // this condition repeat, set true
+          repeatStarted = true;
+
+          // update last repeat time
+          lastRepeatTime = now;
+
+          // return ButtonEvent : BTN_REPEAT
+          return BTN_REPEAT;
+        }
+
+        // condition for continuous repeat after REPEAT_INTERVAL_MS
+      } else if (repeatTime >= SystemTiming::REPEAT_INTERVAL_MS) {
+
+        // update repeat time
+        lastRepeatTime = now;
+
+        // return ButtonEvent : BTN_REPEAT
+        return BTN_REPEAT;
+      }
+    }
+
+    // return ButtonEvent : BTN_NONE
+    return BTN_NONE;
   }
 }
