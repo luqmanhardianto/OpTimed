@@ -49,4 +49,27 @@ ButtonEvent PushButton::update() {
     // return button event BTN_NONE
     return BTN_NONE;
   }
+
+  // button is currently hold.
+  if (pressed && wasPressed) {
+
+    // record start hhold time
+    const unsigned long heldTime = now - pressStartTime;
+
+    // long press event : emit once
+    if (!longPressSent && heldTime >= SystemTiming::LONGPRESS_MS) {
+
+      // button pressed more than timing LONGPRESS_MS, set true.
+      longPressSent = true;
+
+      // this condition not repeat event, set false
+      repeatStarted = false;
+
+      // update last repeat time
+      lastRepeatTime = now;
+
+      // return ButtonEvent : BTN_LONG_PRESS
+      return BTN_LONG_PRESS;
+    }
+  }
 }
