@@ -13,19 +13,34 @@ void setup() {
 
   buttonPower.begin(DigitalInput::BUTTON_POWER);
   ledPower.begin(DigitalOutput::POWER_LED);
+
+  Serial.println("optimed button event test");
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  // read button state
   buttonPower.readState();
-  if (buttonPower.isPressed()) {
-    ledPower.on();
-  } else {
-    ledPower.off();
+
+  // update button event depent button state
+  ButtonEvent event = buttonPower.update();
+
+  // check event Button
+  switch (event) {
+    case BTN_LONG_PRESS:
+      Serial.println("BTN_LONG_PRESS ");
+      break;
+
+    case BTN_REPEAT:
+      Serial.println("BTN_REPEAT");
+      break;
+
+    case BTN_SHORT_PRESS:
+      Serial.println("BTN_SHORT_PRESS");
+      break;
+
+    case BTN_NONE:
+      // do nothing
+      break;
   }
-  Serial.print("btnPower:");
-  Serial.print(buttonPower.isPressed());
-  Serial.print(" | ledPower:");
-  Serial.println(ledPower.getState());
-  delay(500);
 }
